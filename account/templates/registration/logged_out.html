@@ -1,0 +1,30 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+
+<div class="logout-page">
+
+    <div class="logout-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 8V5.5A2.5 2.5 0 0 1 11.5 3h6A2.5 2.5 0 0 1 20 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-6A2.5 2.5 0 0 1 9 18.5V16"/>
+            <path d="M13 12H3"/>
+            <path d="M6.5 8.5 3 12l3.5 3.5"/>
+        </svg>
+    </div>
+
+    <h1>See you soon</h1>
+
+    <p>
+        You have been logged out of Bookmarks.
+    </p>
+
+    <a href="{% url 'login' %}" class="login-again-button">
+        Log in again
+        <span aria-hidden="true">→</span>
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Bookmark an Image{% endblock %}
+
+{% block content %}
+
+<section class="bookmark-create-page">
+
+    <!-- Page Header -->
+    <header class="bookmark-create-header">
+
+        <span class="bookmark-create-eyebrow">
+            NEW BOOKMARK
+        </span>
+
+        <h1>Save something worth keeping.</h1>
+
+        <p>
+            Add this image to your collection and make it part of
+            your Bookmarks profile.
+        </p>
+
+    </header>
+
+
+    <!-- Bookmark Composer -->
+    <div class="bookmark-composer">
+
+        <!-- Image Preview -->
+        <section class="bookmark-preview">
+
+            <div class="bookmark-preview-label">
+                <span>IMAGE PREVIEW</span>
+
+                <span class="preview-status">
+                    READY
+                </span>
+            </div>
+
+
+            <div class="bookmark-image-frame">
+
+                <img
+                    src="{{ request.GET.url }}"
+                    alt="Image selected for bookmarking"
+                    class="bookmark-preview-image"
+                >
+
+            </div>
+
+
+            <div class="bookmark-source-info">
+
+                <div class="source-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/>
+                        <path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/>
+                    </svg>
+                </div>
+
+                <div class="source-copy">
+                    <span>FROM THE WEB</span>
+                    <p>{{ request.GET.url }}</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Bookmark Form -->
+        <section class="bookmark-details">
+
+            <div class="bookmark-details-header">
+
+                <span class="bookmark-create-eyebrow">
+                    DETAILS
+                </span>
+
+                <h2>Create your bookmark</h2>
+
+                <p>
+                    Add the information you want to remember about
+                    this image.
+                </p>
+
+            </div>
+
+
+            <form method="post" class="bookmark-create-form">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+
+                <button type="submit" class="save-bookmark-button">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.75 3.75A1.75 1.75 0 0 1 8.5 2h7A1.75 1.75 0 0 1 17.25 3.75V21L12 17.5 6.75 21V3.75Z"/>
+                    </svg>
+
+                    <span>Save bookmark</span>
+
+                    <span class="save-arrow" aria-hidden="true">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</section>
+
+{% endblock %}

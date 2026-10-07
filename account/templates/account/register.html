@@ -1,0 +1,29 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+
+<div class="account-form-container register-container">
+
+    <div class="account-form-header">
+        <h1>Join Bookmarks</h1>
+        <p>Create your account and start discovering, saving, and sharing what interests you.</p>
+    </div>
+
+    <form method="post" class="account-form">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" value="Create account">
+    </form>
+
+    <p class="account-switch">
+        Already have an account?
+        <a href="{% url 'login' %}">Log in</a>
+    </p>
+
+</div>
+
+{% endblock %}

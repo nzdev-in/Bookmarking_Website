@@ -1,0 +1,497 @@
+/* ============================================================
+   BOOKMARKLET OVERLAY
+   PRISM FROST × LIQUID PEARL
+   ============================================================ */
+
+
+/* ============================================================
+   01. MAIN WINDOW
+   ============================================================ */
+
+#bookmarklet {
+    position: fixed !important;
+
+    top: 24px !important;
+    right: 24px !important;
+
+    width: min(430px, calc(100vw - 48px)) !important;
+    max-height: calc(100vh - 48px) !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.92) !important;
+    border-radius: 24px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.94),
+            rgba(245, 246, 255, 0.90)
+        ) !important;
+
+    box-shadow:
+        0 30px 80px rgba(38, 43, 78, 0.22),
+        0 8px 25px rgba(38, 43, 78, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+
+    backdrop-filter: blur(28px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(150%) !important;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif !important;
+
+    color: #272a3a !important;
+
+    z-index: 2147483647 !important;
+}
+
+
+/*
+   IMPORTANT:
+   External websites can have styles like:
+   img { ... }
+   a { ... }
+   h1 { ... }
+
+   So we explicitly control our own elements.
+*/
+
+#bookmarklet,
+#bookmarklet * {
+    box-sizing: border-box !important;
+}
+
+
+/* ============================================================
+   02. HEADER
+   ============================================================ */
+
+#bookmarklet .bookmarklet-header {
+    position: relative !important;
+
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+
+    gap: 20px !important;
+
+    padding: 25px 25px 21px !important;
+
+    margin: 0 !important;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(171, 215, 255, 0.30),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(202, 193, 255, 0.28),
+            transparent 42%
+        ) !important;
+}
+
+
+/* ============================================================
+   03. HEADING AREA
+   ============================================================ */
+
+#bookmarklet .bookmarklet-heading {
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+#bookmarklet .bookmarklet-label {
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 7px !important;
+
+    margin: 0 0 8px !important;
+    padding: 0 !important;
+
+    color: #6263d9 !important;
+
+    font-family: inherit !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: 0.16em !important;
+
+    text-transform: uppercase !important;
+}
+
+
+#bookmarklet .bookmarklet-label::before {
+    content: "" !important;
+
+    display: block !important;
+
+    width: 5px !important;
+    height: 5px !important;
+
+    flex: 0 0 5px !important;
+
+    border-radius: 50% !important;
+
+    background: #6263d9 !important;
+
+    box-shadow:
+        0 0 0 4px rgba(98, 99, 217, 0.09) !important;
+}
+
+
+#bookmarklet h1 {
+    margin: 0 0 7px !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+
+    background: none !important;
+
+    color: #272a3a !important;
+
+    font-family: inherit !important;
+
+    font-size: 24px !important;
+    font-weight: 680 !important;
+
+    line-height: 1.1 !important;
+
+    letter-spacing: -0.045em !important;
+
+    text-align: left !important;
+
+    text-decoration: none !important;
+
+    text-transform: none !important;
+
+    text-shadow: none !important;
+}
+
+
+#bookmarklet .bookmarklet-heading p {
+    max-width: 290px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #85899a !important;
+
+    font-family: inherit !important;
+
+    font-size: 11px !important;
+    font-weight: 400 !important;
+
+    line-height: 1.55 !important;
+
+    letter-spacing: 0 !important;
+
+    text-align: left !important;
+}
+
+
+/* ============================================================
+   04. CLOSE BUTTON
+   ============================================================ */
+
+#bookmarklet #close {
+    width: 34px !important;
+    height: 34px !important;
+
+    flex: 0 0 34px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin: -2px 0 0 !important;
+    padding: 0 0 3px !important;
+
+    border: 1px solid rgba(76, 84, 120, 0.09) !important;
+    border-radius: 11px !important;
+
+    background: rgba(255, 255, 255, 0.70) !important;
+
+    box-shadow:
+        0 5px 15px rgba(48, 55, 95, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+
+    color: #8b8f9e !important;
+
+    font-family: Arial, sans-serif !important;
+    font-size: 23px !important;
+    font-weight: 300 !important;
+
+    line-height: 1 !important;
+
+    text-align: center !important;
+    text-decoration: none !important;
+
+    cursor: pointer !important;
+
+    transition:
+        transform 160ms ease,
+        color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease !important;
+}
+
+
+#bookmarklet #close:hover {
+    color: #5254cb !important;
+
+    background: rgba(255, 255, 255, 0.96) !important;
+
+    box-shadow:
+        0 7px 18px rgba(48, 55, 95, 0.10),
+        inset 0 1px 0 #ffffff !important;
+
+    transform: translateY(-1px) !important;
+}
+
+
+/* ============================================================
+   05. DIVIDER
+   ============================================================ */
+
+#bookmarklet .bookmarklet-divider {
+    width: calc(100% - 50px) !important;
+    height: 1px !important;
+
+    margin: 0 25px !important;
+    padding: 0 !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(78, 86, 120, 0.12) 12%,
+            rgba(78, 86, 120, 0.12) 88%,
+            transparent
+        ) !important;
+}
+
+
+/* ============================================================
+   06. IMAGE GRID
+   ============================================================ */
+
+#bookmarklet .images {
+    width: 100% !important;
+    max-height: calc(100vh - 190px) !important;
+
+    margin: 0 !important;
+    padding: 20px !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 12px !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.25),
+            rgba(246, 247, 253, 0.42)
+        ) !important;
+
+    scrollbar-width: thin !important;
+    scrollbar-color:
+        rgba(98, 99, 217, 0.25)
+        transparent !important;
+}
+
+
+/* Chrome / Edge scrollbar */
+
+#bookmarklet .images::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+
+#bookmarklet .images::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+
+#bookmarklet .images::-webkit-scrollbar-thumb {
+    border-radius: 999px !important;
+
+    background: rgba(98, 99, 217, 0.22) !important;
+}
+
+
+#bookmarklet .images::-webkit-scrollbar-thumb:hover {
+    background: rgba(98, 99, 217, 0.38) !important;
+}
+
+
+/* ============================================================
+   07. FOUND IMAGES
+   ============================================================ */
+
+#bookmarklet .images img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 145px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    object-fit: cover !important;
+
+    overflow: hidden !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.94) !important;
+    border-radius: 14px !important;
+
+    background: #f1f3fa !important;
+
+    box-shadow:
+        0 7px 18px rgba(45, 52, 93, 0.08),
+        inset 0 1px 0 #ffffff !important;
+
+    opacity: 1 !important;
+
+    cursor: pointer !important;
+
+    filter: none !important;
+
+    transform: none !important;
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease !important;
+}
+
+
+#bookmarklet .images img:hover {
+    border-color: rgba(98, 99, 217, 0.30) !important;
+
+    box-shadow:
+        0 12px 27px rgba(47, 53, 101, 0.15),
+        0 0 0 3px rgba(98, 99, 217, 0.055) !important;
+
+    transform: translateY(-3px) !important;
+}
+
+
+/* ============================================================
+   08. IMAGE ACTIVE STATE
+   ============================================================ */
+
+#bookmarklet .images img:active {
+    transform: translateY(-1px) scale(0.985) !important;
+}
+
+
+/* ============================================================
+   09. MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    #bookmarklet {
+        top: 12px !important;
+        right: 12px !important;
+        left: 12px !important;
+
+        width: auto !important;
+
+        max-height: calc(100vh - 24px) !important;
+
+        border-radius: 20px !important;
+    }
+
+
+    #bookmarklet .bookmarklet-header {
+        padding: 21px 20px 18px !important;
+    }
+
+
+    #bookmarklet h1 {
+        font-size: 21px !important;
+    }
+
+
+    #bookmarklet .bookmarklet-heading p {
+        max-width: 240px !important;
+
+        font-size: 10px !important;
+    }
+
+
+    #bookmarklet .bookmarklet-divider {
+        width: calc(100% - 40px) !important;
+
+        margin: 0 20px !important;
+    }
+
+
+    #bookmarklet .images {
+        max-height: calc(100vh - 170px) !important;
+
+        padding: 16px !important;
+
+        gap: 10px !important;
+    }
+
+
+    #bookmarklet .images img {
+        height: 125px !important;
+    }
+
+}
+
+
+/* ============================================================
+   10. VERY SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+    #bookmarklet .images {
+        grid-template-columns: 1fr !important;
+    }
+
+
+    #bookmarklet .images img {
+        height: 175px !important;
+    }
+
+}
+
+
+/* ============================================================
+   11. REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #bookmarklet #close,
+    #bookmarklet .images img {
+        transition: none !important;
+    }
+
+}

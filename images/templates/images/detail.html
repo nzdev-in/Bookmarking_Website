@@ -1,0 +1,73 @@
+{% extends 'account/base.html' %}
+
+{% block title %}{{ image.title }}{% endblock %}
+
+{% block content %}
+
+<section class="bookmark-detail-page">
+
+    <div class="bookmark-detail-layout">
+
+        <!-- Main Image -->
+        <section class="bookmark-detail-visual">
+
+            <div class="bookmark-detail-image-frame">
+
+                <img
+                    src="{{ image.image.url }}"
+                    alt="{{ image.title }}"
+                    class="bookmark-detail-image"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- Bookmark Information -->
+        <aside class="bookmark-detail-info">
+
+            <div class="bookmark-detail-top">
+
+                <span class="bookmark-detail-eyebrow">
+                    BOOKMARK
+                </span>
+
+                <h1>
+                    {{ image.title }}
+                </h1>
+
+            </div>
+
+
+            <!--
+                Future social features can be added here:
+
+                - User / creator
+                - Like button
+                - Save button
+                - Comments
+                - Description
+                - Original source
+                - Date bookmarked
+            -->
+
+            <div class="bookmark-detail-placeholder">
+
+                <span class="detail-placeholder-label">
+                    SAVED TO BOOKMARKS
+                </span>
+
+                <p>
+                    A piece of the web worth remembering.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</section>
+
+{% endblock %}

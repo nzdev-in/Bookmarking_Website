@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Bookmarks{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+
+            <!-- Brand -->
+            <a href="{% url 'home' %}" class="brand">
+                <span class="brand-symbol">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.75 3.75A1.75 1.75 0 0 1 8.5 2h7A1.75 1.75 0 0 1 17.25 3.75V21L12 17.5 6.75 21V3.75Z"/>
+                    </svg>
+                </span>
+
+                <span class="brand-text">Bookmarks</span>
+            </a>
+
+
+            {% if request.user.is_authenticated %}
+
+                <!-- Main social navigation -->
+                <nav class="main-nav">
+                    <a href="{% url 'home' %}" class="nav-item">
+                        Home
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        Explore
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        People
+                    </a>
+                </nav>
+
+
+                <!-- User section -->
+                <div class="user-area">
+
+                    <a href="#" class="user-profile-link">
+
+                        <span class="avatar">
+                            {{ request.user.first_name|default:request.user.username|first|upper }}
+                        </span>
+
+                        <span class="user-name">
+                            {{ request.user.first_name|default:request.user.username }}
+                        </span>
+
+                    </a>
+
+                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+                        {% csrf_token %}
+
+                        <button type="submit" class="logout-btn">
+                            Logout
+                        </button>
+                    </form>
+
+                </div>
+
+            {% else %}
+
+                <div class="guest-navigation">
+
+                    <a href="{% url 'login' %}" class="login-link">
+                        Log in
+                    </a>
+
+                    <a href="{% url 'register' %}" class="join-button">
+                        Join Bookmarks
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+    </header>
+
+
+    <main class="site-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

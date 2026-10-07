@@ -1,0 +1,9 @@
+.env
+dbsqlite3
+__pycache__/
+cert.crt
+cert.key
+staticfiles/
+*.pyc
+bookmark_env
+.venv

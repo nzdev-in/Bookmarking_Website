@@ -1,0 +1,199 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Home · Bookmarks{% endblock %}
+
+{% block content %}
+
+<section class="dashboard">
+
+    <!-- =====================================================
+         WELCOME
+         ===================================================== -->
+
+    <section class="dashboard-intro">
+
+        <div class="intro-copy">
+
+            <span class="dashboard-eyebrow">
+                YOUR SPACE
+            </span>
+
+            <h1>
+                Welcome back,
+                <span>
+                    {{ request.user.first_name|default:request.user.username }}
+                </span>
+            </h1>
+
+            <p class="intro-description">
+                Discover, collect, and keep the things on the internet
+                that are worth coming back to.
+            </p>
+
+            <a href="{% url 'edit' %}" class="edit-profile-link">
+                Edit your profile
+                <span aria-hidden="true">→</span>
+            </a>
+
+        </div>
+
+
+        <div class="intro-profile-mark">
+
+            <div class="welcome-avatar">
+                {{ request.user.first_name|default:request.user.username|first|upper }}
+            </div>
+
+            <div class="profile-mark-copy">
+
+                <span>YOUR PROFILE</span>
+
+                <strong>
+                    {{ request.user.first_name|default:request.user.username }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         BOOKMARKLET
+         ===================================================== -->
+
+    <section class="bookmarklet-panel">
+
+        <div class="bookmarklet-panel-copy">
+
+            <span class="dashboard-eyebrow">
+                SAVE FROM ANYWHERE
+            </span>
+
+            <h2>
+                The web is your collection.
+            </h2>
+
+            <p>
+                Found an image worth keeping? Drag the button to your
+                browser's bookmarks bar once, then use it on other websites
+                whenever you want to save something.
+            </p>
+
+        </div>
+
+
+        <div class="bookmarklet-action">
+
+            <span class="bookmarklet-instruction">
+                DRAG TO BOOKMARKS BAR
+            </span>
+
+            <a
+                href='javascript:{% include "account/bookmarklet_launcher.js" %}'
+                class="bookmarklet-drag-button"
+                title="Drag this button to your bookmarks bar"
+            >
+
+                <span class="bookmarklet-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M6.75 3.75A1.75 1.75 0 0 1 8.5 2h7A1.75
+                            1.75 0 0 1 17.25 3.75V21L12 17.5 6.75
+                            21V3.75Z"
+                        />
+                    </svg>
+                </span>
+
+                <span class="bookmarklet-button-text">
+                    Bookmark It
+                </span>
+
+                <span
+                    class="bookmarklet-drag-symbol"
+                    aria-hidden="true"
+                >
+                    ↗
+                </span>
+
+            </a>
+
+            <span class="bookmarklet-hint">
+                Drag, don't click
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEED
+         ===================================================== -->
+
+    <section class="feed-section">
+
+        <header class="feed-heading">
+
+            <div>
+
+                <span class="dashboard-eyebrow">
+                    YOUR FEED
+                </span>
+
+                <h2>
+                    Discover something worth saving.
+                </h2>
+
+            </div>
+
+            <span class="feed-status">
+                JUST FOR YOU
+            </span>
+
+        </header>
+
+
+        <!-- Empty feed until actual social feed is added -->
+
+        <div class="empty-feed">
+
+            <div class="empty-feed-decoration">
+                <span>01</span>
+            </div>
+
+
+            <div class="empty-bookmark-icon">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M6.75 3.75A1.75 1.75 0 0 1 8.5 2h7A1.75
+                        1.75 0 0 1 17.25 3.75V21L12 17.5 6.75
+                        21V3.75Z"
+                    />
+                </svg>
+
+            </div>
+
+
+            <div class="empty-feed-copy">
+
+                <h3>
+                    Your feed is waiting.
+                </h3>
+
+                <p>
+                    Start saving things you love and connecting with people.
+                    Your discoveries will begin taking shape here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}

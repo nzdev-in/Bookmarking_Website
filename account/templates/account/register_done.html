@@ -1,0 +1,33 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+<div class="registration-success">
+
+    <div class="success-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12.5l4.2 4.2L19 7"/>
+        </svg>
+    </div>
+
+    <h1>Welcome to Bookmarks</h1>
+
+    <p class="welcome-user">
+        Welcome, <strong>{{ new_user.first_name }}</strong>
+    </p>
+
+    <p class="success-message">
+        Your account has been created successfully.
+        You're ready to start discovering and saving what matters to you.
+    </p>
+
+    <a href="{% url 'login' %}" class="continue-login">
+        Continue to login
+        <span>→</span>
+    </a>
+
+</div>
+
+{% endblock %}
