@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.com','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['*','mysite.com','localhost','127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAM_HOSTNAME")
 
 if RENDER_EXTERNAL_HOSTNAME:
