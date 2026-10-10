@@ -1,0 +1,50 @@
+{% for image in images %}
+
+<article class="bookmark-explore-card">
+
+    <a
+        href="{{ image.get_absolute_url }}"
+        class="bookmark-explore-image-link"
+        aria-label="View {{ image.title }}"
+    >
+
+        <div class="bookmark-explore-image-frame">
+
+            <img
+                src="{{ image.url }}"
+                alt="{{ image.title }}"
+                class="bookmark-explore-image"
+                loading="lazy"
+            >
+
+            <div class="bookmark-explore-image-overlay">
+
+                <span class="bookmark-explore-view">
+                    View bookmark ↗
+                </span>
+
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <div class="bookmark-explore-card-info">
+
+        <a
+            href="{{ image.get_absolute_url }}"
+            class="bookmark-explore-card-title"
+        >
+            {{ image.title }}
+        </a>
+
+        <span class="bookmark-explore-card-label">
+            SAVED IMAGE
+        </span>
+
+    </div>
+
+</article>
+
+{% endfor %}

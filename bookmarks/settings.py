@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.urls import reverse_lazy
 
 load_dotenv()
 
@@ -29,11 +30,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','mysite.com','localhost','127.0.0.1']
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAM_HOSTNAME")
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = []
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAM_HOSTNAME")
 
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -48,8 +50,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "social_django",
-    "django_extensions"
-    
+    "django_extensions",
+    "easy_thumbnails",
+    "actions.apps.ActionsConfig"
 ]
 
 MIDDLEWARE = [
@@ -146,3 +149,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user':lambda u: reverse_lazy('user_detail',args=[u.username])
+}

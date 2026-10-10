@@ -2,13 +2,45 @@
 
 {% block title %}{{ image.title }}{% endblock %}
 
+
 {% block content %}
 
 <section class="bookmark-detail-page">
 
-    <div class="bookmark-detail-layout">
+    <article class="bookmark-detail-layout">
 
-        <!-- Main Image -->
+        <!-- ==================================================
+             01. BOOKMARK HEADER
+             ================================================== -->
+
+        <header class="bookmark-detail-top">
+
+            <div class="bookmark-detail-heading">
+
+                <span class="bookmark-detail-eyebrow">
+                    BOOKMARK
+                </span>
+
+                <h1>{{ image.title }}</h1>
+
+                <p class="bookmark-detail-subtitle">
+                    A piece of the web worth remembering.
+                </p>
+
+            </div>
+
+            <span class="bookmark-detail-badge">
+                <span class="bookmark-detail-badge-dot"></span>
+                SAVED IMAGE
+            </span>
+
+        </header>
+
+
+        <!-- ==================================================
+             02. MAIN IMAGE
+             ================================================== -->
+
         <section class="bookmark-detail-visual">
 
             <div class="bookmark-detail-image-frame">
@@ -24,35 +56,120 @@
         </section>
 
 
-        <!-- Bookmark Information -->
-        <aside class="bookmark-detail-info">
+        <!-- ==================================================
+             03. SOCIAL INTERACTIONS
+             ================================================== -->
 
-            <div class="bookmark-detail-top">
+        {% with total_likes=image.users_like.count %}
 
-                <span class="bookmark-detail-eyebrow">
-                    BOOKMARK
-                </span>
+        <section class="bookmark-social">
 
-                <h1>
-                    {{ image.title }}
-                </h1>
+            <!-- Like Actions -->
+
+            <div class="bookmark-social-actions">
+
+                <div class="bookmark-like-count">
+
+                    <span class="bookmark-like-icon">
+                        ♥
+                    </span>
+
+                    <span class="count">
+                        {{ total_likes }} Like{{ total_likes|pluralize }}
+                    </span>
+
+                </div>
+
+
+                <!-- Existing AJAX Like Button -->
+
+                <a
+                    href="#"
+                    class="like"
+                    data-id="{{ image.id }}"
+                    data-action="{% if request.user in image.users_like.all %}un{% endif %}like"
+                >
+
+                    {% if request.user in image.users_like.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+
+                </a>
 
             </div>
 
 
-            <!--
-                Future social features can be added here:
+            <!-- Users Who Liked -->
 
-                - User / creator
-                - Like button
-                - Save button
-                - Comments
-                - Description
-                - Original source
-                - Date bookmarked
-            -->
+            <div class="bookmark-liked-users">
 
-            <div class="bookmark-detail-placeholder">
+                <span class="bookmark-social-label">
+                    APPRECIATED BY
+                </span>
+
+                <div id="users_like">
+
+                    {% include "images/users_liked.html" %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endwith %}
+
+
+        <!-- ==================================================
+             04. BOOKMARK DESCRIPTION
+             ================================================== -->
+
+        <section class="bookmark-detail-description">
+
+            <div class="bookmark-detail-section-heading">
+
+                <span class="bookmark-detail-section-icon">
+                    ✦
+                </span>
+
+                <h2>
+                    About this bookmark
+                </h2>
+
+            </div>
+
+            <div class="bookmark-detail-description-content">
+
+                {% if image.description %}
+
+                    {{ image.description|linebreaks }}
+
+                {% else %}
+
+                    <p class="bookmark-detail-empty-description">
+                        No description has been added to this bookmark.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             05. FOOTER INFORMATION
+             ================================================== -->
+
+        <footer class="bookmark-detail-placeholder">
+
+            <div class="bookmark-detail-footer-icon">
+                ◇
+            </div>
+
+            <div class="bookmark-detail-footer-content">
 
                 <span class="detail-placeholder-label">
                     SAVED TO BOOKMARKS
@@ -64,10 +181,120 @@
 
             </div>
 
-        </aside>
+        </footer>
 
-    </div>
+    </article>
 
 </section>
 
 {% endblock %}
+
+
+{% block domready %}
+
+    const url = '{% url "images:like" %}';
+
+    const likeButton = document.querySelector('.like');
+
+    if (likeButton) {
+
+        likeButton.addEventListener('click', function(e) {
+
+            e.preventDefault();
+
+            const button = this;
+
+            const previousAction = button.dataset.action;
+
+            const formdata = new FormData();
+
+            formdata.append('id', button.dataset.id);
+            formdata.append('action', previousAction);
+
+
+            fetch(url, {
+
+                method: 'POST',
+
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+
+                mode: 'same-origin',
+
+                body: formdata
+
+            })
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Like request failed');
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                if (data.status === 'ok') {
+
+                    /* Update button state */
+
+                    const nextAction =
+                        previousAction === 'like'
+                            ? 'unlike'
+                            : 'like';
+
+                    button.dataset.action = nextAction;
+
+                    button.textContent =
+                        nextAction === 'unlike'
+                            ? 'Unlike'
+                            : 'Like';
+
+
+                    /* Update liked users */
+
+                    const usersLike =
+                        document.querySelector('#users_like');
+
+                    usersLike.innerHTML =
+                        data.user_like_html;
+
+
+                    /* Update like counter */
+
+                    const likeCount =
+                        document.querySelector('.count');
+
+                    let totalLikes =
+                        parseInt(likeCount.textContent, 10);
+
+                    totalLikes =
+                        previousAction === 'like'
+                            ? totalLikes + 1
+                            : totalLikes - 1;
+
+                    likeCount.textContent =
+                        `${totalLikes} Like${totalLikes === 1 ? '' : 's'}`;
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    'Like/Unlike request failed:',
+                    error
+                );
+
+            });
+
+        });
+
+    }
+
+{% endblock domready %}

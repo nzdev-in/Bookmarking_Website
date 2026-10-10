@@ -1,0 +1,100 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Explore Bookmarks{% endblock %}
+
+{% block content %}
+
+<section class="bookmark-explore-page">
+
+    <!-- Page Header -->
+    <header class="bookmark-explore-header">
+
+        <div class="bookmark-explore-heading">
+
+            <span class="bookmark-explore-eyebrow">
+                COMMUNITY COLLECTION
+            </span>
+
+            <h1>
+                Explore Bookmarks<span class="bookmark-explore-title-dot">.</span>
+            </h1>
+
+            <p>
+                Discover interesting images, creative inspiration,
+                and pieces of the web worth remembering.
+            </p>
+
+        </div>
+
+        <div class="bookmark-explore-badge">
+            <span class="bookmark-explore-badge-dot"></span>
+            DISCOVER
+        </div>
+
+    </header>
+
+
+    <!-- Gallery -->
+    <section class="bookmark-explore-gallery">
+
+        <div class="bookmark-explore-gallery-heading">
+
+            <div>
+                <span class="bookmark-explore-section-label">
+                    THE COLLECTION
+                </span>
+
+                <h2>Recently bookmarked</h2>
+            </div>
+
+            <span class="bookmark-explore-gallery-hint">
+                Scroll to discover more ↓
+            </span>
+
+        </div>
+
+
+        <!-- IMPORTANT: Infinite scroll appends images here -->
+        <div id="image-list" class="bookmark-explore-grid">
+
+            {% include "images/list_images.html" %}
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}
+
+
+{% block domready %}
+
+    var page = 1;
+    var emptyPage = false;
+    var blockRequest = false;
+
+    window.addEventListener('scroll',function(e){
+        var margin = document.body.clientHeight - window.innerHeight - 200;
+        if(window.pageYOffset > margin && !emptyPage && !blockRequest){
+            blockRequest = true;
+            page+=1;
+            fetch('?images_only=1&page=' + page)
+            .then(response => response.text())
+            .then(html => {
+                if (html === ''){
+                    emptyPage = true;
+                }
+                else{
+                    var imageList = document.getElementById('image-list');
+                    imageList.insertAdjacentHTML('beforeEnd',html);
+                    blockRequest = false;
+                }
+            })
+        }
+    });
+
+    const scrollEvent = new Event('scroll');
+    window.dispatchEvent(scrollEvent);
+
+{% endblock %}

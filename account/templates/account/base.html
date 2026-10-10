@@ -7,11 +7,19 @@
 
     <title>{% block title %}Bookmarks{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css">
     {% block extra_css %}{% endblock %}
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        const csrftoken = Cookies.get('csrftoken');
+        document.addEventListener('DOMContentLoaded',(event) => {
+            {% block domready %}
+            {% endblock domready %}
+        })
+    </script>
 
     <header class="topbar">
         <div class="topbar-inner">
@@ -36,11 +44,11 @@
                         Home
                     </a>
 
-                    <a href="#" class="nav-item">
+                    <a href="{% url 'images:list' %}" class="nav-item">
                         Explore
                     </a>
 
-                    <a href="#" class="nav-item">
+                    <a href="{% url 'user_list' %}" class="nav-item">
                         People
                     </a>
                 </nav>

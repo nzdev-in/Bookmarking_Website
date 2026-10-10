@@ -155,7 +155,71 @@
         </header>
 
 
-        <!-- Empty feed until actual social feed is added -->
+        <!-- =====================================================
+             ACTIVITY STREAM
+             ===================================================== -->
+
+        {% if actions %}
+
+        <div class="dashboard-activity-stream">
+
+            <div class="activity-stream-header">
+
+                <div class="activity-stream-heading">
+
+                    <span class="activity-stream-eyebrow">
+                        COMMUNITY ACTIVITY
+                    </span>
+
+                    <h2>
+                        What's happening<span>.</span>
+                    </h2>
+
+                    <p>
+                        The latest moments and discoveries from your community.
+                    </p>
+
+                </div>
+
+                <span class="activity-stream-live-badge">
+                    <span class="activity-stream-live-dot"></span>
+                    ACTIVITY
+                </span>
+
+            </div>
+
+
+            <div class="activity-stream-list">
+
+                {% for action in actions %}
+
+                    <div class="activity-stream-item">
+
+                        <div class="activity-stream-marker">
+                            <span></span>
+                        </div>
+
+                        <div class="activity-stream-content">
+
+                            {% include "actions/detail.html" %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =====================================================
+             EMPTY FEED
+             ===================================================== -->
 
         <div class="empty-feed">
 
@@ -191,6 +255,8 @@
             </div>
 
         </div>
+
+        {% endif %}
 
     </section>
 

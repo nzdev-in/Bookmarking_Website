@@ -1,0 +1,250 @@
+{% extends 'account/base.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+
+<section class="bookmark-profile-page">
+
+    <!-- ==========================================
+         PROFILE HEADER
+         ========================================== -->
+
+    <header class="bookmark-profile-header">
+
+        <div class="bookmark-profile-cover"></div>
+
+        <div class="bookmark-profile-main">
+
+            <!-- Profile Avatar -->
+
+            <div class="bookmark-profile-avatar">
+
+                {% if user.profile.photo %}
+
+                    <img
+                        src="{{ user.profile.photo.url }}"
+                        alt="{{ user.username }}"
+                    >
+
+                {% else %}
+
+                    <span class="bookmark-profile-avatar-fallback">
+                        {{ user.username|first|upper }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Profile Information -->
+
+            <div class="bookmark-profile-info">
+
+                <span class="bookmark-profile-eyebrow">
+                    COMMUNITY PROFILE
+                </span>
+
+                <h1>{{ user.username }}</h1>
+
+                <p class="bookmark-profile-subtitle">
+                    Exploring, collecting, and sharing pieces of the web.
+                </p>
+
+
+                <!-- Followers -->
+
+                {% with total_followers=user.followers.count %}
+
+                <div class="bookmark-profile-social">
+
+                    <div class="bookmark-profile-followers">
+
+                        <span class="bookmark-profile-followers-icon">
+                            ♡
+                        </span>
+
+                        <span id="count">
+                            {{ total_followers }} Follower{{ total_followers|pluralize }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Follow / Unfollow Button -->
+
+                    {% if request.user.is_authenticated and request.user != user %}
+
+                    <a
+                        href="#"
+                        id="follow"
+                        data-id="{{ user.id }}"
+                        data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+                    >
+
+                        {% if request.user in user.followers.all %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}
+
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+                {% endwith %}
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         USER'S BOOKMARKS
+         ========================================== -->
+
+    <section class="bookmark-profile-gallery">
+
+        <div class="bookmark-profile-gallery-heading">
+
+            <div>
+
+                <span class="bookmark-profile-section-label">
+                    PERSONAL COLLECTION
+                </span>
+
+                <h2>Bookmarks by {{ user.username }}</h2>
+
+            </div>
+
+            <span class="bookmark-profile-gallery-hint">
+                A collection worth exploring
+            </span>
+
+        </div>
+
+
+        <!-- Reuse the existing Discover gallery -->
+
+        <div class="bookmark-explore-grid bookmark-profile-image-grid">
+
+            {% with images=user.images_created.all %}
+
+                {% include "images/list_images.html" %}
+
+            {% endwith %}
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}
+
+
+{% block domready %}
+
+    const followButton = document.querySelector('#follow');
+
+    if (followButton) {
+
+        const url = "{% url 'follow' %}";
+
+        var options = {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            mode: 'same-origin'
+        };
+
+        followButton.addEventListener('click', function(e) {
+
+            e.preventDefault();
+
+            var button = this;
+
+            var previousAction = button.dataset.action;
+
+            var formData = new FormData();
+
+            formData.append('id', button.dataset.id);
+            formData.append('action', previousAction);
+
+            options['body'] = formData;
+
+            fetch(url, options)
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Follow request failed');
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                if (data['status'] === 'ok') {
+
+                    var action =
+                        previousAction === 'follow'
+                            ? 'unfollow'
+                            : 'follow';
+
+                    button.dataset.action = action;
+
+                    button.textContent =
+                        action === 'unfollow'
+                            ? 'Unfollow'
+                            : 'Follow';
+
+
+                    /* Update follower count */
+
+                    var followerCount =
+                        document.querySelector('#count');
+
+                    var totalFollowers =
+                        parseInt(followerCount.textContent, 10);
+
+                    totalFollowers =
+                        previousAction === 'follow'
+                            ? totalFollowers + 1
+                            : totalFollowers - 1;
+
+                    followerCount.textContent =
+                        totalFollowers +
+                        ' Follower' +
+                        (totalFollowers === 1 ? '' : 's');
+
+                }
+
+                else {
+                    alert('AJAX had some errors');
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    'Follow/Unfollow request failed:',
+                    error
+                );
+
+            });
+
+        });
+
+    }
+
+{% endblock domready %}

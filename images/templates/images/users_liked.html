@@ -1,0 +1,52 @@
+{% for user in image.users_like.all %}
+
+    <div class="bookmark-liked-user">
+
+        <!-- Profile Picture -->
+
+        <div class="bookmark-liked-avatar">
+
+            {% if user.profile.photo %}
+
+                <img
+                    src="{{ user.profile.photo.url }}"
+                    alt="{{ user.username }}"
+                    loading="lazy"
+                >
+
+            {% else %}
+
+                <span class="bookmark-avatar-fallback">
+                    {{ user.username|first|upper }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Username -->
+
+        <span class="bookmark-liked-username">
+
+            {{ user.first_name|default:user.username }}
+
+        </span>
+
+    </div>
+
+{% empty %}
+
+    <div class="bookmark-no-likes">
+
+        <span class="bookmark-no-likes-icon">
+            ♡
+        </span>
+
+        <p>
+            Be the first to appreciate this bookmark.
+        </p>
+
+    </div>
+
+{% endfor %}

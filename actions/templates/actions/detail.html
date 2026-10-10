@@ -1,0 +1,112 @@
+{% with user=action.user profile=action.user.profile %}
+
+<article class="bookmark-activity">
+
+    <!-- USER AVATAR -->
+    <a
+        href="{{ user.get_absolute_url }}"
+        class="bookmark-activity-avatar-link"
+        aria-label="View {{ user.username }}'s profile"
+    >
+        <div class="bookmark-activity-avatar">
+
+            {% if profile.photo %}
+
+                <img
+                    src="{{ profile.photo.url }}"
+                    alt="{{ user.username }}"
+                    loading="lazy"
+                >
+
+            {% else %}
+
+                <span class="bookmark-activity-avatar-fallback">
+                    {{ user.username|first|upper }}
+                </span>
+
+            {% endif %}
+
+        </div>
+    </a>
+
+
+    <!-- ACTIVITY INFORMATION -->
+    <div class="bookmark-activity-body">
+
+        <div class="bookmark-activity-top">
+
+            <div class="bookmark-activity-description">
+
+                <a
+                    href="{{ user.get_absolute_url }}"
+                    class="bookmark-activity-username"
+                >
+                    {{ user.username }}
+                </a>
+
+                <span class="bookmark-activity-verb">
+                    {{ action.verb }}
+                </span>
+
+                {% if action.target %}
+
+                    {% with target=action.target %}
+
+                        <a
+                            href="{{ target.get_absolute_url }}"
+                            class="bookmark-activity-target-link"
+                        >
+                            {{ target }}
+                        </a>
+
+                    {% endwith %}
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- TIMESTAMP -->
+            <span class="bookmark-activity-time">
+                {{ action.created|timesince }} ago
+            </span>
+
+        </div>
+
+
+        <!-- TARGET IMAGE PREVIEW -->
+        {% if action.target %}
+
+            {% with target=action.target %}
+
+                {% if target.image %}
+
+                    <a
+                        href="{{ target.get_absolute_url }}"
+                        class="bookmark-activity-preview"
+                        aria-label="View bookmarked image"
+                    >
+
+                        <img
+                            src="{{ target.image.url }}"
+                            alt="{{ target }}"
+                            loading="lazy"
+                        >
+
+                        <span class="bookmark-activity-preview-label">
+                            View bookmark ↗
+                        </span>
+
+                    </a>
+
+                {% endif %}
+
+            {% endwith %}
+
+        {% endif %}
+
+    </div>
+
+</article>
+
+{% endwith %}
